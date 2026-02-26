@@ -4,10 +4,10 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "npx tsc && node dist/app.js",
+    "dev": "tsc && node dist/app.js",
     "build": "tsc",
     "start": "node dist/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsc && node dist/tests/runTests.js"
   },
   "keywords": [],
   "author": "",
