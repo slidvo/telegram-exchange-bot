@@ -84,3 +84,11 @@
 }
 ```
 </details>
+
+## Nginx команды
+| № | Команда | Описание |
+|---|---------|----------|
+| 1 | `sudo nano /etc/nginx/sites-available/default` | Открыть конфиг для редактирования |
+| 2 | `sudo nginx -t` | Проверка корректности конфига |
+| 3 | `sudo systemctl restart nginx` | Перезапуск nginx |
+| 4 | `sudo systemctl status nginx` | Проверка статуса |
