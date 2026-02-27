@@ -3,7 +3,7 @@ import { toLatestRates } from "../mappers/LatestRatesMapper.js";
 import type { CurrencyClient } from "./CurrencyClient.js";
 
 export class MockCurrencyClient implements CurrencyClient {
-  async getLatestRates(base: string = "USD"): Promise<LatestRates> {
+  async getLatestRates(base: string = "EUR"): Promise<LatestRates> {
     const response = {
       success: true,
       timestamp: 1519296206,
