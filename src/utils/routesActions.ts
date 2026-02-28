@@ -29,7 +29,31 @@ function genLatestRatesAction(currencyClient: MockCurrencyClient): RouteAction {
   };
 }
 
+function genSlidwoCurrencyBotWebhookUpdates(): RouteAction {
+  return {
+    method: "POST",
+    apply: async (res, req) => {
+      return new Promise(async (resolve, reject) => {
+        if (!req) {
+          res.writeHead(400);
+          res.end("Bad Request");
+          reject();
+        } else {
+          req.setEncoding("utf8");
+          //TODO Create service or utils class for reading req.body ...
+          req.on("data", () => {});
+          resolve();
+        }
+      });
+    },
+  };
+}
+
 export const routeActionsMap: Map<string, RouteAction> = new Map([
   [RoutesEnum.HelloWorld, genHelloWorldAction()],
   [RoutesEnum.LatestRates, genLatestRatesAction(new MockCurrencyClient())],
+  [
+    RoutesEnum.SlidwoCurrencyBotWebhookUpdates,
+    genSlidwoCurrencyBotWebhookUpdates(),
+  ],
 ]);
