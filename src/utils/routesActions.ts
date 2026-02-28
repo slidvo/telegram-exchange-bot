@@ -1,5 +1,6 @@
 import { MockCurrencyClient } from "../clients/MockCurrencyClient.js";
 import type { RouteAction } from "../types/types.js";
+import { RoutesEnum } from "../enum/RoutesEnum.js";
 
 function genHelloWorldAction(): RouteAction {
   return {
@@ -29,9 +30,6 @@ function genLatestRatesAction(currencyClient: MockCurrencyClient): RouteAction {
 }
 
 export const routeActionsMap: Map<string, RouteAction> = new Map([
-  ["/metalamp-study/telegram-exchange-bot/hello-world", genHelloWorldAction()],
-  [
-    "/metalamp-study/telegram-exchange-bot/latest/rates",
-    genLatestRatesAction(new MockCurrencyClient()),
-  ],
+  [RoutesEnum.HelloWorld, genHelloWorldAction()],
+  [RoutesEnum.LatestRates, genLatestRatesAction(new MockCurrencyClient())],
 ]);
