@@ -3,6 +3,7 @@ import type { RouteAction } from "../types/types.js";
 import { RoutesEnum } from "../enum/RoutesEnum.js";
 import DefaultRequestBodyService from "../services/DefaultRequestBodyService.js";
 import type RequestBody from "../model/RequestBody.js";
+import type { RequestBodyService } from "../services/RequestBodyService.js";
 
 function genHelloWorldAction(): RouteAction {
   return {
@@ -32,7 +33,7 @@ function genLatestRatesAction(currencyClient: MockCurrencyClient): RouteAction {
 }
 
 function genSlidwoCurrencyBotWebhookUpdates(
-  requsetBodyService: DefaultRequestBodyService,
+  requsetBodyService: RequestBodyService,
 ): RouteAction {
   return {
     method: "POST",

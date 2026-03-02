@@ -1,6 +1,9 @@
 import http, { Server } from "node:http";
 import { Router } from "./router/Router.js";
 import { routeActionsMap } from "./utils/routesActions.js";
+import { SlidwoCurrencyBotController } from "./controllers/SlidwoCurrencyBotController.js";
+import { SlidwoCurrencyBotActionsProvider } from "./services/SlidwoCurrencyBotActionsProvider.js";
+import DefaultRequestBodyService from "./services/DefaultRequestBodyService.js";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
  */
@@ -22,5 +25,11 @@ class MyServer {
   }
 }
 
-const myServer = new MyServer(new Router(routeActionsMap));
+const myServer = new MyServer(
+  new Router(
+    new SlidwoCurrencyBotActionsProvider(
+      new SlidwoCurrencyBotController(new DefaultRequestBodyService()),
+    ),
+  ),
+);
 myServer.startMyServer();

@@ -1,8 +1,10 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { RouteAction } from "../types/types.js";
+import type { SlidwoCurrencyBotActionsProvider } from "../services/SlidwoCurrencyBotActionsProvider.js";
 
 export class Router {
-  constructor(private routeActionsMap: Map<string, RouteAction>) {}
+  constructor(
+    private slidwoCurrencyBotActionsProvider: SlidwoCurrencyBotActionsProvider,
+  ) {}
 
   async handleRoute(
     req: IncomingMessage,
@@ -10,7 +12,8 @@ export class Router {
     url: URL,
   ): Promise<void> {
     console.log(`DEBUG: url.pathname = ${url.pathname}`);
-    const action = this.routeActionsMap.get(url.pathname);
+    const actionsMap = this.slidwoCurrencyBotActionsProvider.getActionsMap();
+    const action = actionsMap.get(url.pathname);
 
     if (action && req.method === action.method) {
       await action.apply(res, req);
