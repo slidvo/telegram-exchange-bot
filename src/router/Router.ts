@@ -12,11 +12,17 @@ export class Router {
     console.log(`DEBUG: url.pathname = ${url.pathname}`);
     const action = routeActionsMap.get(url.pathname);
 
-    if (action && req.method === action.method) {
-      await action.apply(res);
-    } else {
-      res.writeHead(404);
-      res.end("Not found");
+    try {
+      if (action && req.method === action.method) {
+        await action.apply(res, req);
+      } else {
+        res.writeHead(404);
+        res.end("Not found");
+      }
+    } catch (error) {
+      res.writeHead(400);
+      res.end("Bad Request");
+      return;
     }
   }
 }
