@@ -1,14 +1,15 @@
 import http, { Server } from "node:http";
 import { Router } from "./router/Router.js";
-import { routeActionsMap } from "./utils/routesActions.js";
 import { SlidwoCurrencyBotController } from "./controllers/SlidwoCurrencyBotController.js";
-import { SlidwoCurrencyBotActionsProvider } from "./services/SlidwoCurrencyBotActionsProvider.js";
-import DefaultRequestBodyService from "./services/DefaultRequestBodyService.js";
+import DefaultRequestBodyService from "./services/impl/DefaultRequestBodyService.js";
+import DefaultActionsProvider from "./providers/DefaultActionsProvider.js";
+import { MockCurrencyClient } from "./clients/MockCurrencyClient.js";
+import { HelloWorldController } from "./controllers/HelloWorldController.js";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
  */
 
-class MyServer {
+class App {
   constructor(private router: Router) {}
 
   private getMyServer(): Server {
@@ -25,10 +26,14 @@ class MyServer {
   }
 }
 
-const myServer = new MyServer(
+const myServer = new App(
   new Router(
-    new SlidwoCurrencyBotActionsProvider(
-      new SlidwoCurrencyBotController(new DefaultRequestBodyService()),
+    new DefaultActionsProvider(
+      new SlidwoCurrencyBotController(
+        new DefaultRequestBodyService(),
+        new MockCurrencyClient(),
+      ),
+      new HelloWorldController(),
     ),
   ),
 );

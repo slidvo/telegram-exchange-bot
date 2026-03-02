@@ -1,11 +1,15 @@
+import type { CurrencyClient } from "../clients/CurrencyClient.js";
 import type RequestBody from "../model/RequestBody.js";
 import type { RequestBodyService } from "../services/RequestBodyService.js";
 import type { RouteAction } from "../types/types.js";
 
 export class SlidwoCurrencyBotController {
-  constructor(private requestBodyService: RequestBodyService) {}
+  constructor(
+    private requestBodyService: RequestBodyService,
+    private currencyClient: CurrencyClient,
+  ) {}
 
-  genSlidwoCurrencyBotWebhookUpdates(): RouteAction {
+  getWebhookUpdatesRouteAction(): RouteAction {
     return {
       method: "POST",
       apply: async (res, req) => {

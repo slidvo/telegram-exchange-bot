@@ -1,6 +1,6 @@
 import type { IncomingMessage } from "node:http";
-import type RequestBody from "../model/RequestBody.js";
-import type { RequestBodyService } from "./RequestBodyService.js";
+import type RequestBody from "../../model/RequestBody.js";
+import type { RequestBodyService } from "../RequestBodyService.js";
 
 export default class DefaultRequestBodyService implements RequestBodyService {
   readRequestBody(req: IncomingMessage): Promise<RequestBody> {
