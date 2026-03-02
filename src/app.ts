@@ -1,5 +1,6 @@
 import http, { Server } from "node:http";
 import { Router } from "./router/Router.js";
+import { routeActionsMap } from "./utils/routesActions.js";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
  */
@@ -21,5 +22,5 @@ class MyServer {
   }
 }
 
-const myServer = new MyServer(new Router());
+const myServer = new MyServer(new Router(routeActionsMap));
 myServer.startMyServer();

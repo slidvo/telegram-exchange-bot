@@ -1,7 +1,8 @@
 import { MockCurrencyClient } from "../clients/MockCurrencyClient.js";
 import type { RouteAction } from "../types/types.js";
 import { RoutesEnum } from "../enum/RoutesEnum.js";
-import { json } from "node:stream/consumers";
+import DefaultRequestBodyService from "../services/DefaultRequestBodyService.js";
+import type RequestBody from "../model/RequestBody.js";
 
 function genHelloWorldAction(): RouteAction {
   return {
@@ -30,16 +31,24 @@ function genLatestRatesAction(currencyClient: MockCurrencyClient): RouteAction {
   };
 }
 
-function genSlidwoCurrencyBotWebhookUpdates(): RouteAction {
+function genSlidwoCurrencyBotWebhookUpdates(
+  requsetBodyService: DefaultRequestBodyService,
+): RouteAction {
   return {
     method: "POST",
     apply: async (res, req) => {
-      return new Promise(async (resolve, reject) => {
+      let data: RequestBody | any;
+      try {
         console.log("DEBUG: SlidwoCurrencyBotWebhookUpdates is working");
-        console.log(`DEBUG: ${req?.headers["content-type"]}`);
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ hello: "world" }));
-      });
+        data = await requsetBodyService.readRequestBody(req!);
+        console.log(data);
+        res.statusCode = 200;
+      } catch (error) {
+        res.statusCode = 500;
+        data = { httpCode: "500", message: "Internal server error" };
+      } finally {
+        res.end(JSON.stringify(data));
+      }
     },
   };
 }
@@ -49,6 +58,6 @@ export const routeActionsMap: Map<string, RouteAction> = new Map([
   [RoutesEnum.LatestRates, genLatestRatesAction(new MockCurrencyClient())],
   [
     RoutesEnum.SlidwoCurrencyBotWebhookUpdates,
-    genSlidwoCurrencyBotWebhookUpdates(),
+    genSlidwoCurrencyBotWebhookUpdates(new DefaultRequestBodyService()),
   ],
 ]);
