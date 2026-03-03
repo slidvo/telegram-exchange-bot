@@ -1,6 +1,6 @@
 import type { HelloWorldController } from "../controllers/HelloWorldController.js";
 import type { SlidwoCurrencyBotController } from "../controllers/SlidwoCurrencyBotController.js";
-import { RoutesEnum } from "../enum/RoutesEnum.js";
+import { RoutesEnum } from "../enums/RoutesEnum.js";
 import type { RouteAction } from "../types/types.js";
 import type { ActionsProvider } from "./ActionsProvider.js";
 
