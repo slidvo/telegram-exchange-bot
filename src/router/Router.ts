@@ -1,8 +1,8 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { routeActionsMap } from "../utils/routesActions.js";
+import type { ActionsProvider } from "../providers/ActionsProvider.js";
 
 export class Router {
-  constructor() {}
+  constructor(private actionsProvider: ActionsProvider) {}
 
   async handleRoute(
     req: IncomingMessage,
@@ -10,10 +10,11 @@ export class Router {
     url: URL,
   ): Promise<void> {
     console.log(`DEBUG: url.pathname = ${url.pathname}`);
-    const action = routeActionsMap.get(url.pathname);
+
+    const action = this.actionsProvider.getRouteActionsMap().get(url.pathname);
 
     if (action && req.method === action.method) {
-      await action.apply(res);
+      await action.apply(req, res);
     } else {
       res.writeHead(404);
       res.end("Not found");

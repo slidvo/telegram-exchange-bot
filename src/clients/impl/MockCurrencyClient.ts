@@ -1,6 +1,6 @@
-import type LatestRates from "../dto/LatestRates.js";
-import { toLatestRates } from "../mappers/LatestRatesMapper.js";
-import type { CurrencyClient } from "./CurrencyClient.js";
+import type LatestRates from "../../dto/LatestRates.js";
+import { toLatestRates } from "../../mappers/LatestRatesMapper.js";
+import type { CurrencyClient } from "../CurrencyClient.js";
 
 export class MockCurrencyClient implements CurrencyClient {
   async getLatestRates(base: string = "EUR"): Promise<LatestRates> {

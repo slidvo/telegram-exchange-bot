@@ -1,4 +1,4 @@
-import { MockCurrencyClient } from "../clients/MockCurrencyClient.js";
+import { MockCurrencyClient } from "../clients/impl/MockCurrencyClient.js";
 import assert from "node:assert";
 
 export async function getLatestRatesTest_shouldReturnBaseEUR() {
