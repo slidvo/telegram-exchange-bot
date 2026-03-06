@@ -1,9 +1,9 @@
 import type Update from "../dto/Update.js";
-import type { RequestBodyService } from "../services/RequestBodyService.js";
+import type { CurrencyBotService } from "../services/CurrencyBotService.js";
 import type { RouteAction } from "../types/types.js";
 
 export class SlidwoCurrencyBotController {
-  constructor(private requestBodyService: RequestBodyService) {}
+  constructor(private currencyBotService: CurrencyBotService) {}
 
   getWebhookUpdatesRouteAction(): RouteAction {
     return {
@@ -17,7 +17,7 @@ export class SlidwoCurrencyBotController {
           console.log("DEBUG: SlidwoCurrencyBotWebhookUpdates is working");
           res.statusCode = 200;
           res.end(JSON.stringify({ status: "ok" }));
-          this.requestBodyService.readRequestBody(req);
+          this.currencyBotService.processUpdate(req);
         } catch (error) {
           res.statusCode = 500;
           data = { httpCode: "500", message: "Internal server error" };
