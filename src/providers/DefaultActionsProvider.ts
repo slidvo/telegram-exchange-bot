@@ -22,4 +22,6 @@ export default class DefaultActionsProvider implements ActionsProvider {
       ],
     ]);
   }
+
+  // getCommandsActionsMap(): Map<string, CommandAction>
 }
