@@ -1,6 +1,6 @@
 import type { IncomingMessage } from "node:http";
-import type RequestBody from "../model/RequestBody.js";
+import type Update from "../dto/Update.js";
 
 export interface RequestBodyService {
-  readRequestBody(req: IncomingMessage): Promise<RequestBody>;
+  readRequestBody(req: IncomingMessage): Promise<Update>;
 }

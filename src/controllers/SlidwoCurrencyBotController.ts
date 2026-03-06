@@ -1,28 +1,26 @@
-import type { CurrencyClient } from "../clients/CurrencyClient.js";
-import type RequestBody from "../model/RequestBody.js";
+import type Update from "../dto/Update.js";
 import type { RequestBodyService } from "../services/RequestBodyService.js";
 import type { RouteAction } from "../types/types.js";
 
 export class SlidwoCurrencyBotController {
-  constructor(
-    private requestBodyService: RequestBodyService,
-    private currencyClient: CurrencyClient,
-  ) {}
+  constructor(private requestBodyService: RequestBodyService) {}
 
   getWebhookUpdatesRouteAction(): RouteAction {
     return {
       method: "POST",
-      apply: async (res, req) => {
-        let data: RequestBody | any;
+      apply: async (req: any, res: any) => {
+        let data:
+          | Update
+          | { httpCode: string; message: string }
+          | { status: string };
         try {
           console.log("DEBUG: SlidwoCurrencyBotWebhookUpdates is working");
-          data = await this.requestBodyService.readRequestBody(req!);
-          console.log(data);
           res.statusCode = 200;
+          res.end(JSON.stringify({ status: "ok" }));
+          this.requestBodyService.readRequestBody(req);
         } catch (error) {
           res.statusCode = 500;
           data = { httpCode: "500", message: "Internal server error" };
-        } finally {
           res.end(JSON.stringify(data));
         }
       },

@@ -3,8 +3,9 @@ import { Router } from "./router/Router.js";
 import { SlidwoCurrencyBotController } from "./controllers/SlidwoCurrencyBotController.js";
 import DefaultRequestBodyService from "./services/impl/DefaultRequestBodyService.js";
 import DefaultActionsProvider from "./providers/DefaultActionsProvider.js";
-import { MockCurrencyClient } from "./clients/MockCurrencyClient.js";
+import { MockCurrencyClient } from "./clients/impl/MockCurrencyClient.js";
 import { HelloWorldController } from "./controllers/HelloWorldController.js";
+import SlidwoCurrencyBotClient from "./clients/impl/SlidwoCurrencyBotClient.js";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
  */
@@ -29,10 +30,7 @@ class App {
 const myServer = new App(
   new Router(
     new DefaultActionsProvider(
-      new SlidwoCurrencyBotController(
-        new DefaultRequestBodyService(),
-        new MockCurrencyClient(),
-      ),
+      new SlidwoCurrencyBotController(new DefaultRequestBodyService()),
       new HelloWorldController(),
     ),
   ),

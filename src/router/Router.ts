@@ -14,7 +14,7 @@ export class Router {
     const action = this.actionsProvider.getRouteActionsMap().get(url.pathname);
 
     if (action && req.method === action.method) {
-      await action.apply(res, req);
+      await action.apply(req, res);
     } else {
       res.writeHead(404);
       res.end("Not found");
