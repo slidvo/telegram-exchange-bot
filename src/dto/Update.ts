@@ -5,7 +5,7 @@ import type Message from "./Message.js";
  * At most one of the optional parameters can be present in any given update.
  * Official documentaion link https://core.telegram.org/bots/api#update
  */
-export default interface Update {
+export interface Update {
   /**
    * Uniquie identifier
    */

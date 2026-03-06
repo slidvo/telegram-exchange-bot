@@ -1,5 +1,4 @@
-import type { SlidwoCurrencyBotCommand } from "../../dto/SlidwoCurrencyBotCommand.js";
-import type Update from "../../dto/Update.js";
+import type { Update } from "../../dto/Update.js";
 import type { CurrencyBotService } from "../CurrencyBotService.js";
 import type { RequestBodyService } from "../RequestBodyService.js";
 import type { SlidwoCurrencyBotCommandHandlerService as CommandsHandler } from "./SlidwoCurrencyBotCommandHandlerService.js";

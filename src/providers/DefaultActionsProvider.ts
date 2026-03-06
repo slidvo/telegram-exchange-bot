@@ -1,7 +1,8 @@
 import type { HelloWorldController } from "../controllers/HelloWorldController.js";
 import type { SlidwoCurrencyBotController } from "../controllers/SlidwoCurrencyBotController.js";
+import { CommandsEnum } from "../enums/CommandsEnum.js";
 import { RoutesEnum } from "../enums/RoutesEnum.js";
-import type { RouteAction } from "../types/types.js";
+import type { CommandAction, RouteAction } from "../types/types.js";
 import type { ActionsProvider } from "./ActionsProvider.js";
 
 export default class DefaultActionsProvider implements ActionsProvider {
@@ -22,6 +23,4 @@ export default class DefaultActionsProvider implements ActionsProvider {
       ],
     ]);
   }
-
-  // getCommandsActionsMap(): Map<string, CommandAction>
 }

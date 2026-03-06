@@ -1,4 +1,4 @@
-import type Update from "../dto/Update.js";
+import type { Update } from "../dto/Update.js";
 import type { CurrencyBotService } from "../services/CurrencyBotService.js";
 import type { RouteAction } from "../types/types.js";
 

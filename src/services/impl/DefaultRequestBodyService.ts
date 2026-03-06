@@ -1,9 +1,9 @@
 import type { IncomingMessage } from "node:http";
-import type Update from "../../dto/Update.js";
+import type { Update } from "../../dto/Update.js";
 import type { RequestBodyService } from "../RequestBodyService.js";
 
 export default class DefaultRequestBodyService implements RequestBodyService {
-  readRequestBody(req: IncomingMessage): Promise<Update> {
+  readRequestBody<Update>(req: IncomingMessage): Promise<Update> {
     return new Promise((resolve, reject) => {
       let data = "";
 
