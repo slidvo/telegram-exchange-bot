@@ -14,6 +14,7 @@ export class SlidwoCurrencyBotController {
           | { httpCode: string; message: string }
           | { status: string };
         try {
+          //TODO Create LoggerService
           console.log("DEBUG: SlidwoCurrencyBotWebhookUpdates is working");
           res.statusCode = 200;
           res.end(JSON.stringify({ status: "ok" }));
