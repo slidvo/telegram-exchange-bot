@@ -1,4 +1,5 @@
+import type { Update } from "../dto/Update.js";
+
 export interface CommandsHandlerService {
-  handleCommand(updateMessageText: string): void;
-  searchCommand(text: string): string | undefined;
+  handleCommand(update: Update): void;
 }

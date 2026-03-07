@@ -1,3 +1,5 @@
+import type { Update } from "../dto/Update.js";
+
 export interface CurrencyBotService {
-  processUpdate(req: any): void;
+  processUpdate(update: Update): void;
 }

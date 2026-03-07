@@ -39,12 +39,10 @@ class App {
     const commandsHandler = new SlidwoCurrencyBotCommandHandlerService(
       commandsActionProvider,
     );
-    const currencyBotService = new SlidwoCurrencyBotService(
-      requsetBodyService,
-      commandsHandler,
-    );
+    const currencyBotService = new SlidwoCurrencyBotService(commandsHandler);
     const currencyBotController = new SlidwoCurrencyBotController(
       currencyBotService,
+      requsetBodyService,
     );
     const actionsProvider = new RoutesActionsProvider(
       currencyBotController,
