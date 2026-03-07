@@ -10,15 +10,15 @@ export default class DefaultActionsProvider implements ActionsProvider {
     private helloWorldController: HelloWorldController,
   ) {}
 
-  getRouteActionsMap(): Map<string, RouteAction> {
-    return new Map<string, RouteAction>([
+  getActionsMap<T>(): Map<string, T> {
+    return new Map<string, T>([
       [
         RoutesEnum.SlidwoCurrencyBotWebhookUpdates,
-        this.slidwoCurrencyBotController.getWebhookUpdatesRouteAction(),
+        this.slidwoCurrencyBotController.getWebhookUpdatesRouteAction() as T,
       ],
       [
         RoutesEnum.HelloWorld,
-        this.helloWorldController.getHelloWorldRouteAction(),
+        this.helloWorldController.getHelloWorldRouteAction() as T,
       ],
     ]);
   }
