@@ -7,7 +7,11 @@
     "dev": "tsc && node dist/app.js",
     "build": "tsc",
     "start": "node dist/app.js",
-    "test": "tsc && node dist/tests/runTests.js"
+    "test": "tsc && node dist/tests/runTests.js",
+    "clean": "rm -rf dist",
+    "cb": "npm run clean && npm run build",
+    "w-clean": "if exist dist rmdir /s /q dist",
+    "wcb": "npm run w-clean && npm run build"
   },
   "keywords": [],
   "author": "",

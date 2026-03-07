@@ -2,7 +2,7 @@ import http, { Server } from "node:http";
 import { Router } from "./router/Router.js";
 import { SlidwoCurrencyBotController } from "./controllers/SlidwoCurrencyBotController.js";
 import DefaultRequestBodyService from "./services/impl/DefaultRequestBodyService.js";
-import DefaultActionsProvider from "./providers/DefaultActionsProvider.js";
+import RoutesActionsProvider from "./providers/RoutesActionsProvider.js";
 import { HelloWorldController } from "./controllers/HelloWorldController.js";
 import { SlidwoCurrencyBotService } from "./services/impl/SlidwoCurrencyBotService.js";
 import { SlidwoCurrencyBotCommandHandlerService } from "./services/impl/SlidwoCurrencyBotCommandHandlerService.js";
@@ -40,7 +40,7 @@ class App {
     const currencyBotController = new SlidwoCurrencyBotController(
       currencyBotService,
     );
-    const actionsProvider = new DefaultActionsProvider(
+    const actionsProvider = new RoutesActionsProvider(
       currencyBotController,
       helloWorldController,
     );

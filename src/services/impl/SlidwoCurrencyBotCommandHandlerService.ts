@@ -1,5 +1,4 @@
 import { CommandsEnum } from "../../enums/CommandsEnum.js";
-import type DefaultActionsProvider from "../../providers/DefaultActionsProvider.js";
 import type { CommandAction } from "../../types/types.js";
 import type { CommandsHandlerService } from "../CommandsHandlerService.js";
 
