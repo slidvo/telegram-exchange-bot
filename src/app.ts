@@ -6,6 +6,8 @@ import RoutesActionsProvider from "./providers/RoutesActionsProvider.js";
 import { HelloWorldController } from "./controllers/HelloWorldController.js";
 import { SlidwoCurrencyBotService } from "./services/impl/SlidwoCurrencyBotService.js";
 import { SlidwoCurrencyBotCommandHandlerService } from "./services/impl/SlidwoCurrencyBotCommandHandlerService.js";
+import { CommandsActionsProvider } from "./providers/CommandsActionsProvider.js";
+import { SlidwoCurrencyBotCommandsService } from "./services/impl/SlidwoCurrencyBotCommandsService.js";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
  */
@@ -32,7 +34,11 @@ class App {
   private static defaultRouter(): Router {
     const helloWorldController = new HelloWorldController();
     const requsetBodyService = new DefaultRequestBodyService();
-    const commandsHandler = new SlidwoCurrencyBotCommandHandlerService();
+    const commandsService = new SlidwoCurrencyBotCommandsService();
+    const commandsActionProvider = new CommandsActionsProvider(commandsService);
+    const commandsHandler = new SlidwoCurrencyBotCommandHandlerService(
+      commandsActionProvider,
+    );
     const currencyBotService = new SlidwoCurrencyBotService(
       requsetBodyService,
       commandsHandler,
