@@ -6,8 +6,14 @@ export class CommandsActionsProvider implements ActionsProvider {
   constructor(private commandsService: CommandsService) {}
   getActionsMap<T>(): Map<string, T> {
     return new Map<string, T>([
-      [CommandsEnum.Start, this.commandsService.start as T],
-      [CommandsEnum.Info, this.commandsService.info as T],
+      [
+        CommandsEnum.Start,
+        this.commandsService.start.bind(this.commandsService) as T,
+      ],
+      [
+        CommandsEnum.Info,
+        this.commandsService.info.bind(this.commandsService) as T,
+      ],
     ]);
   }
 }

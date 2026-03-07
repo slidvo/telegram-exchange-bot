@@ -1,4 +1,6 @@
-export default interface TelegramBotClient {
+import type { SendMessage } from "../dto/SendMessage.js";
+
+export interface TelegramBotClient {
   //TODO
-  sendMessage(msg: string): void;
+  sendMessage(msg: SendMessage): void;
 }

@@ -20,11 +20,11 @@ export class SlidwoCurrencyBotController {
         try {
           //TODO Create LoggerService
           console.log("DEBUG: SlidwoCurrencyBotWebhookUpdates is working");
-          res.statusCode = 200;
-          res.end(JSON.stringify({ status: "ok" }));
           const update =
             await this.requestBodyService.readRequestBody<Update>(req);
-          this.currencyBotService.processUpdate(update);
+          await this.currencyBotService.processUpdate(update);
+          res.statusCode = 200;
+          res.end(JSON.stringify({ status: "ok" }));
         } catch (error) {
           res.statusCode = 500;
           data = { httpCode: "500", message: "Internal server error" };
