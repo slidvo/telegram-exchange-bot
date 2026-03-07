@@ -9,6 +9,7 @@ import { SlidwoCurrencyBotCommandHandlerService } from "./services/impl/SlidwoCu
 import { CommandsActionsProvider } from "./providers/CommandsActionsProvider.js";
 import { SlidwoCurrencyBotCommandsService } from "./services/impl/SlidwoCurrencyBotCommandsService.js";
 import SlidwoCurrencyBotClient from "./clients/impl/SlidwoCurrencyBotClient.js";
+import { DefaultEnvironmentService } from "./services/impl/DefaultEnvironmentService.js";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
  */
@@ -35,7 +36,8 @@ class App {
   private static defaultRouter(): Router {
     const helloWorldController = new HelloWorldController();
     const requsetBodyService = new DefaultRequestBodyService();
-    const telegramBotClient = new SlidwoCurrencyBotClient();
+    const envService = new DefaultEnvironmentService();
+    const telegramBotClient = new SlidwoCurrencyBotClient(envService);
     const commandsService = new SlidwoCurrencyBotCommandsService(
       telegramBotClient,
     );
