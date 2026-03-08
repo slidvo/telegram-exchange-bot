@@ -2,6 +2,7 @@ import type { IncomingMessage } from "node:http";
 import type { RequestBodyService } from "../RequestBodyService.js";
 
 export default class DefaultRequestBodyService implements RequestBodyService {
+  //TODO body can be not a JSON
   readRequestBody<T>(req: IncomingMessage): Promise<T> {
     return new Promise((resolve, reject) => {
       let data = "";
@@ -21,6 +22,28 @@ export default class DefaultRequestBodyService implements RequestBodyService {
       });
 
       req.on("error", reject);
+    });
+  }
+
+  readBody(msg: IncomingMessage): Promise<string> {
+    return new Promise((resolve, reject) => {
+      let data = "";
+
+      msg.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      msg.on("end", () => {
+        try {
+          const body = data;
+
+          resolve(body);
+        } catch (error) {
+          reject(error);
+        }
+      });
+
+      msg.on("error", reject);
     });
   }
 }

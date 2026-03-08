@@ -25,6 +25,7 @@ class App {
 
   private getMyServer(): Server {
     return http.createServer(async (req, res) => {
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
       const url = new URL(req.url!, "http://localhost");
       if (!this.router) {
         this.router = App.defaultRouter();
@@ -35,9 +36,12 @@ class App {
 
   private static defaultRouter(): Router {
     const helloWorldController = new HelloWorldController();
-    const requsetBodyService = new DefaultRequestBodyService();
+    const requestBodyService = new DefaultRequestBodyService();
     const envService = new DefaultEnvironmentService();
-    const telegramBotClient = new SlidwoCurrencyBotClient(envService);
+    const telegramBotClient = new SlidwoCurrencyBotClient(
+      envService,
+      requestBodyService,
+    );
     const commandsService = new SlidwoCurrencyBotCommandsService(
       telegramBotClient,
     );
@@ -48,7 +52,7 @@ class App {
     const currencyBotService = new SlidwoCurrencyBotService(commandsHandler);
     const currencyBotController = new SlidwoCurrencyBotController(
       currencyBotService,
-      requsetBodyService,
+      requestBodyService,
     );
     const actionsProvider = new RoutesActionsProvider(
       currencyBotController,
