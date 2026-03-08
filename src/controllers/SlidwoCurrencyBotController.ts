@@ -12,7 +12,7 @@ export class SlidwoCurrencyBotController {
   getWebhookUpdatesRouteAction(): RouteAction {
     return {
       method: "POST",
-      apply: async (req: any, res: any) => {
+      execute: async (req: any, res: any) => {
         let data:
           | Update
           | { httpCode: string; message: string }

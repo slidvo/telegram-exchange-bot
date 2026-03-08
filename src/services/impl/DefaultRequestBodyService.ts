@@ -13,7 +13,7 @@ export default class DefaultRequestBodyService implements RequestBodyService {
       req.on("end", () => {
         try {
           const body = JSON.parse(data) as T;
-          console.log(body);
+
           resolve(body);
         } catch (error) {
           reject(error);

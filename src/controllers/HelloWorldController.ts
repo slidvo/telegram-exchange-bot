@@ -6,7 +6,7 @@ export class HelloWorldController {
   getHelloWorldRouteAction(): RouteAction {
     return {
       method: "GET",
-      apply: async (req, res) => {
+      execute: async (req, res) => {
         return new Promise((resolve) => {
           res.writeHead(200, { "Content-type": "test/plain" });
           res.end("Hello World!\n");

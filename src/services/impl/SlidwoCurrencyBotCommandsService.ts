@@ -1,5 +1,6 @@
 import type { TelegramBotClient } from "../../clients/TelegramBotClient.js";
 import type { SendMessage } from "../../dto/SendMessage.js";
+import type { Update } from "../../dto/Update.js";
 import type { CommandsService } from "../CommandsService.js";
 
 export class SlidwoCurrencyBotCommandsService implements CommandsService {
@@ -8,9 +9,13 @@ export class SlidwoCurrencyBotCommandsService implements CommandsService {
     Привет! Я помогу тебе узнать текущие курсы валют. 
     Напиши /currency для получения списка доступных валют.
  */
-  async start(chatId: number | string): Promise<void> {
+  async start(update: Update): Promise<void> {
+    console.log(`DEBUG: update = ${JSON.stringify(update)}`);
+    if (!update.message.chat.id) {
+      return;
+    }
     const sendMessageDto: SendMessage = {
-      chat_id: chatId,
+      chat_id: update.message.chat.id,
       text: `Привет! Я помогу тебе узнать текущие курсы валют. 
 Напиши /currency для получения списка доступных валют.`,
     };

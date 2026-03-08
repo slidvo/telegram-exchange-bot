@@ -11,10 +11,17 @@ export class SlidwoCurrencyBotCommandHandlerService implements CommandsHandlerSe
     if (!command) {
       return;
     }
-    this.commandsActionsProvider
+    console.log(`DEBUG: command=${command}`);
+    const action = this.commandsActionsProvider
       .getActionsMap<CommandAction>()
-      .get(command)
-      ?.apply(update);
+      .get(command);
+    if (!action) {
+      console.log("action not exists");
+      return;
+    }
+    console.log(`DEBUG: action=${JSON.stringify(action)}`);
+    console.log(`DEBUG: typeof action.execute=${typeof action.execute}`);
+    action.execute(update);
   }
 
   private searchCommand(text: string): string | undefined {

@@ -18,7 +18,7 @@ export class Router {
       .get(url.pathname);
 
     if (action && req.method === action.method) {
-      await action.apply(req, res);
+      await action.execute(req, res);
     } else {
       res.writeHead(404);
       res.end("Not found");

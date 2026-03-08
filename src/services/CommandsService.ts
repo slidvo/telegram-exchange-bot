@@ -1,5 +1,7 @@
+import type { Update } from "../dto/Update.js";
+
 export interface CommandsService {
-  start(chat_id: number | string): Promise<void>;
+  start(update: Update): Promise<void>;
   info(): void;
   currency(): void;
 }
