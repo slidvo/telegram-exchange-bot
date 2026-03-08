@@ -8,14 +8,14 @@ export class SlidwoCurrencyBotCommandsService implements CommandsService {
     Привет! Я помогу тебе узнать текущие курсы валют. 
     Напиши /currency для получения списка доступных валют.
  */
-  start(chatId: number | string): void {
+  async start(chatId: number | string): Promise<void> {
     const sendMessageDto: SendMessage = {
       chat_id: chatId,
       text: `Привет! Я помогу тебе узнать текущие курсы валют. 
 Напиши /currency для получения списка доступных валют.`,
     };
 
-    this.telegramBotClient.sendMessage(sendMessageDto);
+    await this.telegramBotClient.sendMessage(sendMessageDto);
   }
 
   info(): void {
