@@ -1,3 +1,3 @@
 export interface EnvironmentService {
-  get(key: string): string | undefined;
+  get(key: string): Promise<string>;
 }
