@@ -23,8 +23,13 @@ export class SlidwoCurrencyBotCommandsService implements CommandsService {
     await this.telegramBotClient.sendMessage(sendMessageDto);
   }
 
-  currency(): void {
-    //TODO use API sendMessage, for sending result of command handling to user in telegram chat
-    throw new Error("Method not implemented.");
+  async currency(update: Update): Promise<void> {
+    if (!update.message.chat.id) {
+      return;
+    }
+    await this.telegramBotClient.sendMessage({
+      chat_id: update.message.chat.id,
+      text: "Введи валютную пару в формате USD-EUR, чтобы узнать курс обмена.",
+    });
   }
 }
