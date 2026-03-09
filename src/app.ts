@@ -1,7 +1,7 @@
 import http, { Server } from "node:http";
 import { Router } from "./router/Router.js";
 import { SlidwoCurrencyBotController } from "./controllers/SlidwoCurrencyBotController.js";
-import DefaultRequestBodyService from "./services/impl/DefaultRequestBodyService.js";
+import DefaultBodyReaderService from "./services/impl/DefaultBodyReaderService.js";
 import RoutesActionsProvider from "./providers/RoutesActionsProvider.js";
 import { HelloWorldController } from "./controllers/HelloWorldController.js";
 import { SlidwoCurrencyBotService } from "./services/impl/SlidwoCurrencyBotService.js";
@@ -25,6 +25,7 @@ class App {
 
   private getMyServer(): Server {
     return http.createServer(async (req, res) => {
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
       const url = new URL(req.url!, "http://localhost");
       if (!this.router) {
         this.router = App.defaultRouter();
@@ -35,9 +36,12 @@ class App {
 
   private static defaultRouter(): Router {
     const helloWorldController = new HelloWorldController();
-    const requsetBodyService = new DefaultRequestBodyService();
+    const bodyReaderService = new DefaultBodyReaderService();
     const envService = new DefaultEnvironmentService();
-    const telegramBotClient = new SlidwoCurrencyBotClient(envService);
+    const telegramBotClient = new SlidwoCurrencyBotClient(
+      envService,
+      bodyReaderService,
+    );
     const commandsService = new SlidwoCurrencyBotCommandsService(
       telegramBotClient,
     );
@@ -48,7 +52,7 @@ class App {
     const currencyBotService = new SlidwoCurrencyBotService(commandsHandler);
     const currencyBotController = new SlidwoCurrencyBotController(
       currencyBotService,
-      requsetBodyService,
+      bodyReaderService,
     );
     const actionsProvider = new RoutesActionsProvider(
       currencyBotController,

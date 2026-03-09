@@ -2,11 +2,11 @@ import { EnvironmentsKeyNotFoundError } from "../../errors/EnvironmentsKeyNotFou
 import type { EnvironmentService } from "../EnvironmentService.js";
 
 export class DefaultEnvironmentService implements EnvironmentService {
-  get(key: string): Promise<string> {
+  get(key: string): string {
     const keyValue = process.env[key];
     if (!keyValue) {
       throw new EnvironmentsKeyNotFoundError(key);
     }
-    return Promise.resolve(keyValue);
+    return keyValue;
   }
 }

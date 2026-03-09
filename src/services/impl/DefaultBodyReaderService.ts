@@ -1,8 +1,9 @@
 import type { IncomingMessage } from "node:http";
-import type { RequestBodyService } from "../RequestBodyService.js";
+import type { BodyReaderService } from "../BodyReaderService.js";
 
-export default class DefaultRequestBodyService implements RequestBodyService {
-  readRequestBody<T>(req: IncomingMessage): Promise<T> {
+export default class DefaultBodyReaderService implements BodyReaderService {
+  //TODO body can be not a JSON
+  readBody<T>(req: IncomingMessage): Promise<T> {
     return new Promise((resolve, reject) => {
       let data = "";
 

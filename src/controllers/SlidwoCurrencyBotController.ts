@@ -1,12 +1,12 @@
 import type { Update } from "../dto/Update.js";
 import type { CurrencyBotService } from "../services/CurrencyBotService.js";
-import type { RequestBodyService } from "../services/RequestBodyService.js";
+import type { BodyReaderService } from "../services/BodyReaderService.js";
 import type { RouteAction } from "../types/types.js";
 
 export class SlidwoCurrencyBotController {
   constructor(
     private currencyBotService: CurrencyBotService,
-    private requestBodyService: RequestBodyService,
+    private bodyReaderService: BodyReaderService,
   ) {}
 
   getWebhookUpdatesRouteAction(): RouteAction {
@@ -20,8 +20,7 @@ export class SlidwoCurrencyBotController {
         try {
           //TODO Create LoggerService
           console.log("DEBUG: SlidwoCurrencyBotWebhookUpdates is working");
-          const update =
-            await this.requestBodyService.readRequestBody<Update>(req);
+          const update = await this.bodyReaderService.readBody<Update>(req);
           await this.currencyBotService.processUpdate(update);
           res.statusCode = 200;
           res.end(JSON.stringify({ status: "ok" }));

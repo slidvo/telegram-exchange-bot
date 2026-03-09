@@ -10,6 +10,7 @@
     "test": "tsc && node dist/tests/runTests.js",
     "clean": "rm -rf dist",
     "cb": "npm run clean && npm run build",
+    "cbr": "npm run cb && node --env-file=.env dist/app.js",
     "w-clean": "if exist dist rmdir /s /q dist",
     "wcb": "npm run w-clean && npm run build",
     "wcbr": "npm run w-clean && npm run build && npm run dev"
