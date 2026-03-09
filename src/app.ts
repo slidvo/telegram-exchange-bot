@@ -1,7 +1,7 @@
 import http, { Server } from "node:http";
 import { Router } from "./router/Router.js";
 import { SlidwoCurrencyBotController } from "./controllers/SlidwoCurrencyBotController.js";
-import DefaultRequestBodyService from "./services/impl/DefaultRequestBodyService.js";
+import DefaultBodyReaderService from "./services/impl/DefaultBodyReaderService.js";
 import RoutesActionsProvider from "./providers/RoutesActionsProvider.js";
 import { HelloWorldController } from "./controllers/HelloWorldController.js";
 import { SlidwoCurrencyBotService } from "./services/impl/SlidwoCurrencyBotService.js";
@@ -36,11 +36,11 @@ class App {
 
   private static defaultRouter(): Router {
     const helloWorldController = new HelloWorldController();
-    const requestBodyService = new DefaultRequestBodyService();
+    const bodyReaderService = new DefaultBodyReaderService();
     const envService = new DefaultEnvironmentService();
     const telegramBotClient = new SlidwoCurrencyBotClient(
       envService,
-      requestBodyService,
+      bodyReaderService,
     );
     const commandsService = new SlidwoCurrencyBotCommandsService(
       telegramBotClient,
@@ -52,7 +52,7 @@ class App {
     const currencyBotService = new SlidwoCurrencyBotService(commandsHandler);
     const currencyBotController = new SlidwoCurrencyBotController(
       currencyBotService,
-      requestBodyService,
+      bodyReaderService,
     );
     const actionsProvider = new RoutesActionsProvider(
       currencyBotController,

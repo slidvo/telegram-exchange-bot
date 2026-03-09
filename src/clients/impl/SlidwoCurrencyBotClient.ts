@@ -3,13 +3,13 @@ import fs from "fs";
 import type { SendMessage } from "../../dto/SendMessage.js";
 import type { EnvironmentService } from "../../services/EnvironmentService.js";
 import type { TelegramBotClient } from "../TelegramBotClient.js";
-import type { RequestBodyService } from "../../services/RequestBodyService.js";
+import type { BodyReaderService } from "../../services/BodyReaderService.js";
 
 const TELEGRAM_BOT_TOKEN = "TELEGRAM_BOT_TOKEN";
 export default class SlidwoCurrencyBotClient implements TelegramBotClient {
   constructor(
     private envService: EnvironmentService,
-    private requestBodyService: RequestBodyService,
+    private bodyReaderService: BodyReaderService,
   ) {}
   async sendMessage(msg: SendMessage): Promise<void> {
     const token = this.envService.get(TELEGRAM_BOT_TOKEN);
@@ -37,8 +37,8 @@ export default class SlidwoCurrencyBotClient implements TelegramBotClient {
     const req = https.request(options, async (res) => {
       console.log(`DEBUG: path= /bot${token}/sendMessage`);
       console.log(`DEBUG: token= ${token}`);
-      // rename readRequestBody with readBody and requestBodyService with httpBodyService
-      const rsBody = await this.requestBodyService.readBody(res);
+      // rename readRequestBody with readBody and bodyReaderService with httpBodyService
+      const rsBody = await this.bodyReaderService.readBody(res);
       console.log(`DEBUG: rsBody: ${rsBody}`);
     });
 
