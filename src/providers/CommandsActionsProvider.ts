@@ -15,9 +15,9 @@ export class CommandsActionsProvider implements ActionsProvider {
         } as CommandAction,
       ],
       [
-        CommandsEnum.Info,
+        CommandsEnum.Currency,
         {
-          execute: this.commandsService.info.bind(this.commandsService),
+          execute: this.commandsService.currency.bind(this.commandsService),
         } as CommandAction,
       ],
     ]);
