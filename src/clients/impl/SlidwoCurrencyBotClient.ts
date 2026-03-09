@@ -4,6 +4,7 @@ import type { SendMessage } from "../../dto/SendMessage.js";
 import type { EnvironmentService } from "../../services/EnvironmentService.js";
 import type { TelegramBotClient } from "../TelegramBotClient.js";
 import type { BodyReaderService } from "../../services/BodyReaderService.js";
+import type Message from "../../dto/Message.js";
 
 const TELEGRAM_BOT_TOKEN = "TELEGRAM_BOT_TOKEN";
 export default class SlidwoCurrencyBotClient implements TelegramBotClient {
@@ -35,11 +36,8 @@ export default class SlidwoCurrencyBotClient implements TelegramBotClient {
     console.log(`DEBUG: sendMessagePath: ${sendMessagePath}`);
 
     const req = https.request(options, async (res) => {
-      console.log(`DEBUG: path= /bot${token}/sendMessage`);
-      console.log(`DEBUG: token= ${token}`);
-      // rename readRequestBody with readBody and bodyReaderService with httpBodyService
-      const rsBody = await this.bodyReaderService.readBody(res);
-      console.log(`DEBUG: rsBody: ${rsBody}`);
+      const rsBody = await this.bodyReaderService.readBody<Message>(res);
+      console.log(`DEBUG: rsBody: ${JSON.stringify(rsBody)}`);
     });
 
     req.write(jsonData);
