@@ -1,6 +1,6 @@
 import type { HelloWorldController } from "../controllers/HelloWorldController.js";
 import type { SlidwoCurrencyBotController } from "../controllers/SlidwoCurrencyBotController.js";
-import { RoutesEnum } from "../enums/RoutesEnum.js";
+import { RouteEnum } from "../enums/RouteEnum.js";
 import type { ActionsProvider } from "./ActionsProvider.js";
 
 export default class DefaultActionsProvider implements ActionsProvider {
@@ -12,11 +12,11 @@ export default class DefaultActionsProvider implements ActionsProvider {
   getActionsMap<T>(): Map<string, T> {
     return new Map<string, T>([
       [
-        RoutesEnum.SlidwoCurrencyBotWebhookUpdates,
+        RouteEnum.SlidwoCurrencyBotWebhookUpdates,
         this.slidwoCurrencyBotController.getWebhookUpdatesRouteAction() as T,
       ],
       [
-        RoutesEnum.HelloWorld,
+        RouteEnum.HelloWorld,
         this.helloWorldController.getHelloWorldRouteAction() as T,
       ],
     ]);

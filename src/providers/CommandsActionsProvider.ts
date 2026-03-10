@@ -1,4 +1,4 @@
-import { CommandsEnum } from "../enums/CommandsEnum.js";
+import { CommandEnum } from "../enums/CommandEnum.js";
 import type { CommandsService } from "../services/CommandsService.js";
 import type { ActionsProvider } from "./ActionsProvider.js";
 
@@ -7,13 +7,13 @@ export class CommandsActionsProvider implements ActionsProvider {
   getActionsMap<CommandAction>(): Map<string, CommandAction> {
     return new Map<string, CommandAction>([
       [
-        CommandsEnum.Start,
+        CommandEnum.Start,
         {
           execute: this.commandsService.start.bind(this.commandsService),
         } as CommandAction,
       ],
       [
-        CommandsEnum.Currency,
+        CommandEnum.Currency,
         {
           execute: this.commandsService.currency.bind(this.commandsService),
         } as CommandAction,
