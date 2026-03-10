@@ -10,6 +10,9 @@ import { CommandsActionsProvider } from "./providers/CommandsActionsProvider.js"
 import { SlidwoCurrencyBotCommandsService } from "./services/impl/SlidwoCurrencyBotCommandsService.js";
 import SlidwoCurrencyBotClient from "./clients/impl/SlidwoCurrencyBotClient.js";
 import { DefaultEnvironmentService } from "./services/impl/DefaultEnvironmentService.js";
+import { DefaultCurrencyPairHandlerService } from "./services/impl/DefaultCurrencyPairHandlerService.js";
+import { FrankfurterCurrencyExchangeRatesService } from "./services/impl/FrankfurterCurrencyExchangeRatesService.js";
+import { FrankfurterExchangeRatesClient } from "./clients/impl/FrankfurterExchangeRatesApiClient.js";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
  */
@@ -49,7 +52,22 @@ class App {
     const commandsHandler = new SlidwoCurrencyBotCommandHandlerService(
       commandsActionProvider,
     );
-    const currencyBotService = new SlidwoCurrencyBotService(commandsHandler);
+    const frankfurterExchangeRatesClient = new FrankfurterExchangeRatesClient(
+      bodyReaderService,
+    );
+    const currencyExchangeRatesService =
+      new FrankfurterCurrencyExchangeRatesService(
+        frankfurterExchangeRatesClient,
+      );
+
+    const currencyPairHandlerService = new DefaultCurrencyPairHandlerService(
+      telegramBotClient,
+      currencyExchangeRatesService,
+    );
+    const currencyBotService = new SlidwoCurrencyBotService(
+      commandsHandler,
+      currencyPairHandlerService,
+    );
     const currencyBotController = new SlidwoCurrencyBotController(
       currencyBotService,
       bodyReaderService,

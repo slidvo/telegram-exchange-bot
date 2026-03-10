@@ -3,15 +3,15 @@ import type { BodyReaderService } from "../BodyReaderService.js";
 
 export default class DefaultBodyReaderService implements BodyReaderService {
   //TODO body can be not a JSON
-  readBody<T>(req: IncomingMessage): Promise<T> {
+  readBody<T>(incomingMessage: IncomingMessage): Promise<T> {
     return new Promise((resolve, reject) => {
       let data = "";
 
-      req.on("data", (chunk) => {
+      incomingMessage.on("data", (chunk) => {
         data += chunk;
       });
 
-      req.on("end", () => {
+      incomingMessage.on("end", () => {
         try {
           const body = JSON.parse(data) as T;
 
@@ -21,7 +21,7 @@ export default class DefaultBodyReaderService implements BodyReaderService {
         }
       });
 
-      req.on("error", reject);
+      incomingMessage.on("error", reject);
     });
   }
 }

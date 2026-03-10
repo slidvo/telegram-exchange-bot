@@ -1,5 +1,5 @@
 import type { Update } from "../dto/Update.js";
 
 export interface CommandsHandlerService {
-  handleCommand(update: Update): void;
+  handleCommand(command: string, update: Update): void;
 }

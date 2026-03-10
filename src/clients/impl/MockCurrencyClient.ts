@@ -1,9 +1,9 @@
 import type LatestRates from "../../dto/LatestRates.js";
 import { toLatestRates } from "../../mappers/LatestRatesMapper.js";
-import type { CurrencyClient } from "../CurrencyClient.js";
+import type { CurrencyApiClient } from "../CurrencyApiClient.js";
 
-export class MockCurrencyClient implements CurrencyClient {
-  async getLatestRates(base: string = "EUR"): Promise<LatestRates> {
+export class MockCurrencyClient implements CurrencyApiClient {
+  async getLatestRates(base: string): Promise<LatestRates> {
     const response = {
       success: true,
       timestamp: 1519296206,
