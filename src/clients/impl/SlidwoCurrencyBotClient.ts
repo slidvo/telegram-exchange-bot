@@ -5,6 +5,7 @@ import type { EnvironmentService } from "../../services/EnvironmentService.js";
 import type { TelegramBotClient } from "../TelegramBotClient.js";
 import type { BodyReaderService } from "../../services/BodyReaderService.js";
 import type Message from "../../dto/Message.js";
+import log from "../../utils/logger.js";
 
 const TELEGRAM_BOT_TOKEN = "TELEGRAM_BOT_TOKEN";
 export default class SlidwoCurrencyBotClient implements TelegramBotClient {
@@ -15,7 +16,7 @@ export default class SlidwoCurrencyBotClient implements TelegramBotClient {
   async sendMessage(msg: SendMessage): Promise<void> {
     const token = this.envService.get(TELEGRAM_BOT_TOKEN);
 
-    console.log(`DEBUG: sendMessageDto= ${JSON.stringify(msg)} `);
+    log.DEBUG(`sendMessageDto= ${JSON.stringify(msg)} `);
 
     const jsonData = JSON.stringify(msg);
 
