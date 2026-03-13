@@ -22,20 +22,24 @@ export class FrankfurterExchangeRatesClient implements CurrencyApiClient {
       };
 
       const req = https.request(options, async (res) => {
+        log.DEBUG(
+          `FrankfurterExchangeRatesClient.getLatestRates(${base}) request: ${JSON.stringify(options)}`,
+        );
         if (res.statusCode !== 200) {
           reject(new Error(`HTTP error! status: ${res.statusCode}`));
           return;
         }
 
         let data = await this.bodyReaderService.readBody(res);
-        log.DEBUG(`data: ${JSON.stringify(data)}`);
+        log.DEBUG(
+          `FrankfurterExchangeRatesClient.getLatestRates(${base}) response: ${JSON.stringify(data)}`,
+        );
         resolve(toLatestRates(data));
       });
 
       req.on("error", (error) => {
         reject(new Error(`Request failed: ${error.message}`));
       });
-
       req.end();
     });
   }
