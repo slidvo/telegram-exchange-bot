@@ -3,7 +3,7 @@ import type LatestRates from "../../dto/LatestRates.js";
 import { toLatestRates } from "../../mappers/LatestRatesMapper.js";
 import type { CurrencyApiClient as CurrencyApiClient } from "../CurrencyApiClient.js";
 import type { BodyReaderService } from "../../services/BodyReaderService.js";
-import { resolve } from "dns";
+import log from "../../utils/logger.js";
 
 //TODO https://api.frankfurter.app
 // https://frankfurter.dev/
@@ -28,7 +28,7 @@ export class FrankfurterExchangeRatesClient implements CurrencyApiClient {
         }
 
         let data = await this.bodyReaderService.readBody(res);
-        console.log(`DEBUG data: ${JSON.stringify(data)}`);
+        log.DEBUG(`data: ${JSON.stringify(data)}`);
         resolve(toLatestRates(data));
       });
 

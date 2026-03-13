@@ -1,8 +1,8 @@
 import type { Update } from "../../dto/Update.js";
-import type { CurrencyEnum } from "../../enums/CurrencyEnum.js";
 import type { CurrencyBotService } from "../CurrencyBotService.js";
 import type { CurrencyPairHandlerService as CurrencyPairHandler } from "../CurrencyPairHandlerService.js";
 import type { SlidwoCurrencyBotCommandHandlerService as CommandsHandler } from "./SlidwoCurrencyBotCommandHandlerService.js";
+import log from "../../utils/logger.js";
 
 export class SlidwoCurrencyBotService implements CurrencyBotService {
   constructor(
@@ -33,7 +33,7 @@ export class SlidwoCurrencyBotService implements CurrencyBotService {
   }
 
   private isCommandCurrencyPiar(currencyPair: string): boolean {
-    console.log(`DEBUG: curencyPair ${currencyPair}`);
+    log.DEBUG(`curencyPair ${currencyPair}`);
     return /^[A-Za-z]{3}\/[A-Za-z]{3}/.test(currencyPair);
   }
 }

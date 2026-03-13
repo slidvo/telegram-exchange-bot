@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { ActionsProvider } from "../providers/ActionsProvider.js";
 import type { RouteAction } from "../types/types.js";
+import log from "../utils/logger.js";
 
 export class Router {
   constructor(private actionsProvider: ActionsProvider) {}
@@ -10,8 +11,7 @@ export class Router {
     res: ServerResponse,
     url: URL,
   ): Promise<void> {
-    //TODO use LoggerService
-    console.log(`DEBUG: url.pathname = ${url.pathname}`);
+    log.DEBUG(`url.pathname = ${url.pathname}`);
 
     const action = this.actionsProvider
       .getActionsMap<RouteAction>()

@@ -34,11 +34,11 @@ export default class SlidwoCurrencyBotClient implements TelegramBotClient {
       },
     };
 
-    console.log(`DEBUG: sendMessagePath: ${sendMessagePath}`);
+    log.DEBUG(`sendMessagePath: ${sendMessagePath}`);
 
     const req = https.request(options, async (res) => {
       const rsBody = await this.bodyReaderService.readBody<Message>(res);
-      console.log(`DEBUG: rsBody: ${JSON.stringify(rsBody)}`);
+      log.DEBUG(`rsBody: ${JSON.stringify(rsBody)}`);
     });
 
     req.write(jsonData);

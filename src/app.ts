@@ -13,6 +13,7 @@ import { DefaultEnvironmentService } from "./services/impl/DefaultEnvironmentSer
 import { DefaultCurrencyPairHandlerService } from "./services/impl/DefaultCurrencyPairHandlerService.js";
 import { FrankfurterCurrencyExchangeRatesService } from "./services/impl/FrankfurterCurrencyExchangeRatesService.js";
 import { FrankfurterExchangeRatesClient } from "./clients/impl/FrankfurterExchangeRatesApiClient.js";
+import log from "./utils/logger.js";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
  */
@@ -22,7 +23,7 @@ class App {
 
   startMyServer() {
     this.getMyServer().listen(3000, () => {
-      console.log("Server running on port 3000");
+      log.DEBUG("Server running on port 3000");
     });
   }
 
