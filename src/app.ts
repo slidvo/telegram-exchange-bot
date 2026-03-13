@@ -52,6 +52,7 @@ class App {
     const commandsActionProvider = new CommandsActionsProvider(commandsService);
     const commandsHandler = new SlidwoCurrencyBotCommandHandlerService(
       commandsActionProvider,
+      telegramBotClient,
     );
     const frankfurterExchangeRatesClient = new FrankfurterExchangeRatesClient(
       bodyReaderService,
