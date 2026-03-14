@@ -1,6 +1,7 @@
 import type { TelegramBotClient } from "../../clients/TelegramBotClient.js";
 import type { Update } from "../../dto/Update.js";
 import { CurrencyEnum } from "../../enums/CurrencyEnum.js";
+import log from "../../utils/logger.js";
 import type { CurrencyExchangeRatesService } from "../CurrencyExchangeRatesService.js";
 import type { CurrencyPairHandlerService } from "../CurrencyPairHandlerService.js";
 
@@ -14,23 +15,28 @@ export class DefaultCurrencyPairHandlerService implements CurrencyPairHandlerSer
     const separator = "/";
     const separatedPair = pair.split(separator);
     if (separatedPair.length !== 2) {
-      throw Error(`Неверный формат данных. ${pair}`);
+      const msg = `Неверный формат данных. ${pair}`;
+      log.DEBUG(msg);
+      throw new Error(msg);
     }
     const main = separatedPair.at(0);
     const secondary = separatedPair.at(1);
 
     const isMainCorrect = this.isCurrencyCorrect(main!);
     if (!isMainCorrect) {
-      throw Error(`Неверная валюта main ${main}`);
+      const msg = `Неверная валюта main ${main}`;
+      log.DEBUG(msg);
+      throw new Error(msg);
     }
 
     const isSecondaryCorrect = this.isCurrencyCorrect(secondary!);
     if (!isSecondaryCorrect) {
-      throw Error(`Неверная валюта secondary ${secondary}`);
+      const msg = `Неверная валюта secondary ${secondary}`;
+      log.DEBUG(msg);
+      throw new Error(msg);
     }
 
     const exhangeRate = await this.client.getExchangeRate(main, secondary);
-    //Текущий курс USD к EUR: 1.10.
     this.telegramBotClient.sendMessage({
       chat_id: update.message.chat.id,
       text: `Текущий курс ${main} к ${secondary}: ${exhangeRate}`,

@@ -2,6 +2,7 @@ import type LatestRates from "../dto/LatestRates.js";
 import { MissingBaseCurrencyError } from "../errors/MissingBaseCurrencyError.js";
 import { MissingDateError } from "../errors/MissingDateError.js";
 import { MissingRatesError } from "../errors/MissingratesError.js";
+import log from "../utils/logger.js";
 
 export function toLatestRates(json: unknown): LatestRates {
   if (!json || typeof json !== "object") {

@@ -69,6 +69,7 @@ class App {
     const currencyBotService = new SlidwoCurrencyBotService(
       commandsHandler,
       currencyPairHandlerService,
+      telegramBotClient
     );
     const currencyBotController = new SlidwoCurrencyBotController(
       currencyBotService,
