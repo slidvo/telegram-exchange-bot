@@ -5,8 +5,10 @@ import type { CurrencyApiClient as CurrencyApiClient } from "../CurrencyApiClien
 import type { BodyReaderService } from "../../services/BodyReaderService.js";
 import log from "../../utils/logger.js";
 
-//TODO https://api.frankfurter.app
-// https://frankfurter.dev/
+/**
+ * https://api.frankfurter.app
+ * https://frankfurter.dev/
+ */
 export class FrankfurterExchangeRatesClient implements CurrencyApiClient {
   constructor(private bodyReaderService: BodyReaderService) {}
   async getLatestRates(base: string): Promise<LatestRates> {
