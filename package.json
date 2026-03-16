@@ -7,7 +7,7 @@
     "dev": "tsc && node --env-file=.env dist/app.js",
     "build": "tsc",
     "start": "node dist/app.js",
-    "test": "tsc && node dist/tests/runTests.js",
+    "test": "vitest",
     "clean": "rm -rf dist",
     "cb": "npm run clean && npm run build",
     "cbr": "npm run cb && node --env-file=.env dist/app.js",
@@ -24,6 +24,7 @@
     "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
   }
 }
