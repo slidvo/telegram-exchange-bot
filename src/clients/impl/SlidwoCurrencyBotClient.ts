@@ -37,11 +37,26 @@ export default class SlidwoCurrencyBotClient implements TelegramBotClient {
     log.DEBUG(`sendMessagePath: ${sendMessagePath}`);
 
     const req = https.request(options, async (res) => {
-      const rsBody = await this.bodyReaderService.readBody<Message>(res);
+      const rsBody = await this.bodyReaderService.readBody(res);
+      if (!this.isMessage(rsBody)) {
+        throw new Error(`Неверный формат сообщения: ${rsBody}`);
+      }
       log.DEBUG(`rsBody: ${JSON.stringify(rsBody)}`);
     });
 
     req.write(jsonData);
     req.end();
+  }
+
+  private isMessage(obj: any): obj is Message {
+    return (
+      typeof obj === "object" &&
+      obj !== null &&
+      typeof obj.message_id === "number" &&
+      typeof obj.date === "number" &&
+      typeof obj.text === "string" &&
+      typeof obj.from === "object" &&
+      typeof obj.entities === "object"
+    );
   }
 }

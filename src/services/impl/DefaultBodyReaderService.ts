@@ -3,7 +3,7 @@ import type { BodyReaderService } from "../BodyReaderService.js";
 
 export default class DefaultBodyReaderService implements BodyReaderService {
   //TODO body can be not a JSON
-  readBody<T>(incomingMessage: IncomingMessage): Promise<T> {
+  readBody(incomingMessage: IncomingMessage): Promise<unknown> {
     return new Promise((resolve, reject) => {
       let data = "";
 
@@ -13,8 +13,7 @@ export default class DefaultBodyReaderService implements BodyReaderService {
 
       incomingMessage.on("end", () => {
         try {
-          const body = JSON.parse(data) as T;
-
+          const body = JSON.parse(data);
           resolve(body);
         } catch (error) {
           reject(error);
