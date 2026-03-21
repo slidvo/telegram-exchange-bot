@@ -1,6 +1,7 @@
 import type { TelegramBotClient } from "../../clients/TelegramBotClient.js";
 import type { Update } from "../../dto/Update.js";
 import { CurrencyEnum } from "../../enums/CurrencyEnum.js";
+import { InvalidCurrencyCodeError } from "../../errors/InvalidCurrencyCodeError.js";
 import { InvalidDataFormatError } from "../../errors/InvalidDataFormatError.js";
 import log from "../../utils/logger.js";
 import type { CurrencyExchangeRatesService } from "../CurrencyExchangeRatesService.js";
@@ -22,26 +23,26 @@ export class DefaultCurrencyPairHandlerService implements CurrencyPairHandlerSer
     }
 
     const main = separatedPair.at(0);
-    const secondary = separatedPair.at(1);
+    const quote = separatedPair.at(1);
 
     const isMainCorrect = this.isCurrencyCorrect(main!);
     if (!isMainCorrect) {
       const msg = `Неверная валюта main ${main}`;
       log.DEBUG(msg);
-      throw new Error(msg);
+      throw new InvalidCurrencyCodeError(msg);
     }
 
-    const isSecondaryCorrect = this.isCurrencyCorrect(secondary!);
-    if (!isSecondaryCorrect) {
-      const msg = `Неверная валюта secondary ${secondary}`;
+    const isQuoteCorrect = this.isCurrencyCorrect(quote!);
+    if (!isQuoteCorrect) {
+      const msg = `Неверная валюта quote ${quote}`;
       log.DEBUG(msg);
-      throw new Error(msg);
+      throw new InvalidCurrencyCodeError(msg);
     }
 
-    const exhangeRate = await this.client.getExchangeRate(main, secondary);
+    const exhangeRate = await this.client.getExchangeRate(main, quote);
     this.telegramBotClient.sendMessage({
       chat_id: update.message.chat.id,
-      text: `Текущий курс ${main} к ${secondary}: ${exhangeRate}`,
+      text: `Текущий курс ${main} к ${quote}: ${exhangeRate}`,
     });
   }
 
