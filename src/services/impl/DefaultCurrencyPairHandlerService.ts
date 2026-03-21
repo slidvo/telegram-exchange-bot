@@ -1,6 +1,7 @@
 import type { TelegramBotClient } from "../../clients/TelegramBotClient.js";
 import type { Update } from "../../dto/Update.js";
 import { CurrencyEnum } from "../../enums/CurrencyEnum.js";
+import { InvalidDataFormatError } from "../../errors/InvalidDataFormatError.js";
 import log from "../../utils/logger.js";
 import type { CurrencyExchangeRatesService } from "../CurrencyExchangeRatesService.js";
 import type { CurrencyPairHandlerService } from "../CurrencyPairHandlerService.js";
@@ -17,8 +18,9 @@ export class DefaultCurrencyPairHandlerService implements CurrencyPairHandlerSer
     if (separatedPair.length !== 2) {
       const msg = `Неверный формат данных. ${pair}`;
       log.DEBUG(msg);
-      throw new Error(msg);
+      throw new InvalidDataFormatError(msg);
     }
+
     const main = separatedPair.at(0);
     const secondary = separatedPair.at(1);
 

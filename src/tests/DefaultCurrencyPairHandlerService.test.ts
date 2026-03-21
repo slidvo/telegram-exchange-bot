@@ -1,11 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import DefaultBodyReaderService from "../services/impl/DefaultBodyReaderService.js";
-import { IncomingMessage } from "node:http";
-import { PassThrough } from "node:stream";
-import log from "../utils/logger.js";
 import { DefaultCurrencyPairHandlerService } from "../services/impl/DefaultCurrencyPairHandlerService.js";
 import type { TelegramBotClient } from "../clients/TelegramBotClient.js";
 import type { CurrencyExchangeRatesService } from "../services/CurrencyExchangeRatesService.js";
+import type { Update } from "../dto/Update.js";
+import { InvalidDataFormatError } from "../errors/InvalidDataFormatError.js";
 
 describe("DefaultCurrencyPairHandlerService.test", () => {
   let defaultCurrencyPairHandlerService: DefaultCurrencyPairHandlerService;
@@ -16,5 +14,23 @@ describe("DefaultCurrencyPairHandlerService.test", () => {
     telegramBotClient = {
       sendMessage: vi.fn(),
     };
+
+    currencyExchangeRatesService = {
+      getExchangeRate: vi.fn().mockResolvedValue(42),
+    };
+
+    defaultCurrencyPairHandlerService = new DefaultCurrencyPairHandlerService(
+      telegramBotClient,
+      currencyExchangeRatesService,
+    );
+  });
+  //==============
+  it("Wrong currency pair format", async () => {
+    await expect(
+      defaultCurrencyPairHandlerService.currencyPairHandle(
+        "USD-RUB",
+        {} as Update,
+      ),
+    ).rejects.toThrow(InvalidDataFormatError);
   });
 });
