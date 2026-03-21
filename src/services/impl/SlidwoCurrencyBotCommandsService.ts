@@ -30,7 +30,7 @@ export class SlidwoCurrencyBotCommandsService implements CommandsService {
     }
     await this.telegramBotClient.sendMessage({
       chat_id: update.message.chat.id,
-      text: "Введи валютную пару в формате USD-EUR, чтобы узнать курс обмена.",
+      text: "Введи валютную пару в формате USD/EUR, чтобы узнать курс обмена.",
     });
   }
 }

@@ -4,7 +4,6 @@ import type { SendMessage } from "../../dto/SendMessage.js";
 import type { EnvironmentService } from "../../services/EnvironmentService.js";
 import type { TelegramBotClient } from "../TelegramBotClient.js";
 import type { BodyReaderService } from "../../services/BodyReaderService.js";
-import type Message from "../../dto/Message.js";
 import log from "../../utils/logger.js";
 
 const TELEGRAM_BOT_TOKEN = "TELEGRAM_BOT_TOKEN";
@@ -39,7 +38,7 @@ export default class SlidwoCurrencyBotClient implements TelegramBotClient {
     const req = https.request(options, async (res) => {
       const rsBody = await this.bodyReaderService.readBody(res);
       if (!this.isMessage(rsBody)) {
-        throw new Error(`Неверный формат сообщения: ${rsBody}`);
+        log.ERROR(`Неверный формат ответа от телеграм бота: ${rsBody}`);
       }
       log.DEBUG(`rsBody: ${JSON.stringify(rsBody)}`);
     });
@@ -48,15 +47,16 @@ export default class SlidwoCurrencyBotClient implements TelegramBotClient {
     req.end();
   }
 
-  private isMessage(obj: any): obj is Message {
+  private isMessage(obj: any): boolean {
     return (
       typeof obj === "object" &&
       obj !== null &&
-      typeof obj.message_id === "number" &&
-      typeof obj.date === "number" &&
-      typeof obj.text === "string" &&
-      typeof obj.from === "object" &&
-      typeof obj.entities === "object"
+      typeof obj.ok === "boolean" &&
+      typeof obj.result.message_id === "number" &&
+      typeof obj.result.date === "number" &&
+      typeof obj.result.text === "string" &&
+      typeof obj.result.from === "object" &&
+      typeof obj.result.chat === "object"
     );
   }
 }
