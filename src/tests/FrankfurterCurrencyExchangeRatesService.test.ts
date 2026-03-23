@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { FrankfurterCurrencyExchangeRatesService } from "../services/impl/FrankfurterCurrencyExchangeRatesService.js";
 import log from "../utils/logger.js";
+import { FrankfurterCurrencyExchangeRatesService } from "../services/impl/FrankfurterCurrencyExchangeRatesService.js";
 import type { CurrencyApiClient } from "../clients/CurrencyApiClient.js";
 
 describe("FrankfurterCurrencyExchangeRatesService", () => {
