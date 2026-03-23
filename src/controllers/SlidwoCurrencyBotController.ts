@@ -14,22 +14,38 @@ export class SlidwoCurrencyBotController {
     return {
       method: "POST",
       execute: async (req: any, res: any) => {
-        let data:
-          | Update
-          | { httpCode: string; message: string }
-          | { status: string };
+        let errMsg = "";
+        let data: Update | { httpCode: string; message: string };
+
         try {
           log.DEBUG(`getWebhookUpdatesRouteAction.execute is working`);
-          const update = await this.bodyReaderService.readBody<Update>(req);
+          const update = await this.bodyReaderService.readBody(req);
+          if (!this.isUpdate(update)) {
+            errMsg += `От телеграм бота пришло сообщение в неверном формате\n${update}`;
+            throw new Error(errMsg);
+          }
           await this.currencyBotService.processUpdate(update);
           res.statusCode = 200;
           res.end(JSON.stringify({ status: "ok" }));
         } catch (error) {
           res.statusCode = 500;
-          data = { httpCode: "500", message: "Internal server error" };
+          data = {
+            httpCode: "500",
+            message: `Internal server error\n${errMsg}`,
+          };
           res.end(JSON.stringify(data));
         }
       },
     };
+  }
+
+  private isUpdate(obj: any): obj is Update {
+    //TODO
+    return (
+      typeof obj === "object" &&
+      obj !== null &&
+      typeof obj.update_id === "number" &&
+      typeof obj.message === "object"
+    );
   }
 }

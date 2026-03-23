@@ -12,9 +12,7 @@ export class SlidwoCurrencyBotCommandsService implements CommandsService {
  */
   async start(update: Update): Promise<void> {
     log.DEBUG(`update = ${JSON.stringify(update)}`);
-    if (!update.message.chat.id) {
-      return;
-    }
+
     const sendMessageDto: SendMessage = {
       chat_id: update.message.chat.id,
       text: `Привет! Я помогу тебе узнать текущие курсы валют. 
@@ -25,12 +23,9 @@ export class SlidwoCurrencyBotCommandsService implements CommandsService {
   }
 
   async currency(update: Update): Promise<void> {
-    if (!update.message.chat.id) {
-      return;
-    }
     await this.telegramBotClient.sendMessage({
       chat_id: update.message.chat.id,
-      text: "Введи валютную пару в формате USD-EUR, чтобы узнать курс обмена.",
+      text: "Введи валютную пару в формате USD/EUR, чтобы узнать курс обмена.",
     });
   }
 }
